@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulador de procesos</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="top">
+        <h1>Simulador de gestión de procesos</h1>
+        <p>
+          Planificación Round Robin con modelo de estados Listo → Ejecución → Terminado, sobre los
+          catálogos capturados por la aplicación de escritorio.
+        </p>
+      </header>
+
+      <main>
+        <!-- Se rellena desde src/ui/catalogs.ts -->
+        <section class="panel" id="catalogs"></section>
+
+        <!-- Aparece cuando el usuario elige un catálogo. Cada contenedor con id se rellena desde src/ui/app.ts -->
+        <div id="workspace" hidden>
+          <section class="panel">
+            <div class="section-head"><h2>2. Parámetros de la simulación</h2></div>
+            <div class="config">
+              <label>
+                TH (ms por carácter)
+                <input type="number" id="th" min="1" step="1" value="100" />
+              </label>
+              <label>
+                Quantum (ms)
+                <input type="number" id="quantum" min="1" step="1" value="300" />
+              </label>
+              <div class="actions">
+                <button type="button" id="primary" class="primary">Iniciar</button>
+                <button type="button" id="reset">Reiniciar</button>
+              </div>
+            </div>
+            <p class="muted small" id="config-hint"></p>
+            <div class="status" id="status"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-head">
+              <h2>3. Listado de procesos</h2>
+              <span class="muted small" id="catalog-name"></span>
+            </div>
+            <div id="processes"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-head"><h2>4. Modelo de estados</h2></div>
+            <div id="states"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-head"><h2>5. Archivo del proceso en ejecución</h2></div>
+            <div id="file"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-head">
+              <h2>6. Gráfico de comportamiento</h2>
+              <span class="muted small">Eje en milisegundos</span>
+            </div>
+            <div class="gantt">
+              <div id="g-labels" class="g-labels"></div>
+              <div id="g-scroll" class="g-scroll"><div id="g-canvas" class="g-canvas"></div></div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="section-head"><h2>7. Reportes</h2></div>
+            <h3>Listado de ejecución</h3>
+            <div id="report-all"></div>
+            <h3>Listado de procesos no expulsivos</h3>
+            <div id="report-non"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
