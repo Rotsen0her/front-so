@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { CircleCheckIcon, DatabaseIcon, ListOrderedIcon } from "lucide-react"
 
 import { AppHeader } from "@/components/app-header"
@@ -86,6 +86,17 @@ export function App() {
     clock.reset()
     setValues((current) => ({ ...current, ...patch }))
   }
+
+  useEffect(() => {
+    if (clock.status !== "finished" || !schedule) return
+    for (const p of schedule.processes) {
+      const a = document.createElement("a")
+      a.href = URL.createObjectURL(new Blob([p.content], { type: "text/plain" }))
+      a.download = `${p.fileName}.txt`
+      a.click()
+      URL.revokeObjectURL(a.href)
+    }
+  }, [clock.status, schedule])
 
   const finishedResults = useMemo(() => {
     if (!schedule) return []
